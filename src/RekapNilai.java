@@ -29,8 +29,36 @@ public class RekapNilai {
                 continue; // lompat ke kondisi while; jumlahSah tidak naik, jadi nomor yang diminta tetap sama
             }
 
-            System.out.println("  nilai diterima"); // sementara, grade ditambahkan di commit 2
-            jumlahSah++;
+            // Ladder if / else if / else — dicek dari atas dan berhenti di cabang pertama yang true.
+            // Catatan percobaan urutan dibalik (nilai >= 60 ditaruh paling atas, sudah dijalankan):
+            // nilai 85 jadi Grade D — Kurang, bukan B — Baik. Sebab 85 >= 60 sudah true di cabang pertama,
+            // jadi cabang >= 90, >= 80, dan >= 70 tidak pernah dicek. Semua nilai >= 60 berakhir di D,
+            // dan grade A, B, C tidak akan pernah muncul. Karena itu urutan harus dari syarat paling ketat.
+            char grade;
+            if (nilai >= 90) {
+                grade = 'A';
+            } else if (nilai >= 80) {
+                grade = 'B';
+            } else if (nilai >= 70) {
+                grade = 'C';
+            } else if (nilai >= 60) {
+                grade = 'D';
+            } else {
+                grade = 'E';
+            }
+
+            // Keterangan grade: switch lambda (Java 14+), tanpa break dan tanpa fall-through.
+            String keterangan = switch (grade) {
+                case 'A' -> "Sangat Baik";
+                case 'B' -> "Baik";
+                case 'C' -> "Cukup";
+                case 'D' -> "Kurang";
+                default  -> "Tidak Lulus";
+            };
+
+            System.out.println("  Grade " + grade + " — " + keterangan);
+
+            jumlahSah++;      // baru naik setelah nilai lolos semua pengecekan
         } while (nilai != SELESAI);
 
         System.out.println();
@@ -38,4 +66,4 @@ public class RekapNilai {
 
         input.close();
     }
-}ad
+}
