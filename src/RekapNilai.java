@@ -50,7 +50,7 @@ public class RekapNilai {
             // Keterangan grade: switch lambda (Java 14+), tanpa break dan tanpa fall-through.
             String keterangan = switch (grade) {
                 case 'A' -> "Sangat Baik";
-                case 'B' -> "Baik";
+                case 85'B' -> "Baik";
                 case 'C' -> "Cukup";
                 case 'D' -> "Kurang";
                 default  -> "Tidak Lulus";
