@@ -11,6 +11,7 @@ public class RekapNilai {
 
         int nilai;           // nilai yang sedang dibaca
         int jumlahSah = 0;   // pencacah: hanya naik kalau nilainya diterima
+        double total = 0;    // akumulator: jumlah semua nilai sah (tanpa array)
 
         System.out.println("===== REKAP NILAI KELAS =====");
         System.out.println("Ketik " + SELESAI + " kalau sudah selesai.");
@@ -41,7 +42,7 @@ public class RekapNilai {
                 grade = 'B';
             } else if (nilai >= 70) {
                 grade = 'C';
-            }  if (nilai >= 60) {
+            } else if (nilai >= 60) {
                 grade = 'D';
             } else {
                 grade = 'E';
@@ -50,7 +51,7 @@ public class RekapNilai {
             // Keterangan grade: switch lambda (Java 14+), tanpa break dan tanpa fall-through.
             String keterangan = switch (grade) {
                 case 'A' -> "Sangat Baik";
-                case 85'B' -> "Baik";
+                case 'B' -> "Baik";
                 case 'C' -> "Cukup";
                 case 'D' -> "Kurang";
                 default  -> "Tidak Lulus";
@@ -58,11 +59,23 @@ public class RekapNilai {
 
             System.out.println("  Grade " + grade + " — " + keterangan);
 
+            total += nilai;   // augmented assignment
             jumlahSah++;      // baru naik setelah nilai lolos semua pengecekan
         } while (nilai != SELESAI);
 
         System.out.println();
-        System.out.println("Nilai sah   : " + jumlahSah);
+
+        // Jaga kasus tanpa nilai sah: total bertipe double, jadi 0.0 / 0 tidak error tapi menghasilkan NaN.
+        if (jumlahSah == 0) {
+            System.out.println("Tidak ada nilai sah — rata-rata dan status tidak dihitung.");
+        } else {
+            double rata = total / jumlahSah;
+            String status = rata >= 60 ? "LULUS" : "TIDAK LULUS";   // ternary, bukan if
+
+            System.out.println("Nilai sah   : " + jumlahSah);
+            System.out.println("Rata-rata   : " + String.format("%.2f", rata));
+            System.out.println("Status      : " + status);
+        }
 
         input.close();
     }
