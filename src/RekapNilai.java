@@ -41,7 +41,7 @@ public class RekapNilai {
                 grade = 'B';
             } else if (nilai >= 70) {
                 grade = 'C';
-            } else if (nilai >= 60) {
+            }  if (nilai >= 60) {
                 grade = 'D';
             } else {
                 grade = 'E';
